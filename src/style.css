@@ -38,13 +38,19 @@ h1 {
 }
 
 img.controller_button {
-    height: 2rem;
+    height: 2.5rem;
+    cursor: pointer;
+}
+
+img.controller_button:hover {
+    filter: invert(0.5);
 }
 
 .controller {
     display: grid;
     grid-template-columns: repeat(3, 1fr);
-    row-gap: 1rem;
+    gap: 1rem;
+    margin-top: 5rem;
 }
 
 .control_left {
