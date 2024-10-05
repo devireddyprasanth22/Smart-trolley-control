@@ -64,3 +64,9 @@ img.controller_button:hover {
 .control_back {
     rotate: 180deg;
 }
+
+.stop {
+    --size: 3rem;
+    height: var(--size);
+    width: var(--size);
+}

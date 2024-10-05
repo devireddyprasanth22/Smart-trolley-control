@@ -6,17 +6,21 @@ const rightButton = document.querySelector(".control_right") as HTMLImageElement
 const backButton = document.querySelector(".control_back") as HTMLImageElement;
 
 forwardButton.addEventListener("click", async () => {
-    await fetch("/direction/forward");
+    const response = await fetch("/direction/forward");
+    console.log(response);
 });
 
 leftButton.addEventListener("click", async () => {
-    await fetch("/direction/left");
+    const response = await fetch("/direction/left");
+    console.log(response);
 });
 
 rightButton.addEventListener("click", async () => {
-    await fetch("/direction/right");
+    const response = await fetch("/direction/right");
+    console.log(response);
 });
 
 backButton.addEventListener("click", async () => {
     await fetch("/direction/back");
+    console.log("back");
 });
