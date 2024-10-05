@@ -5,18 +5,18 @@ const leftButton = document.querySelector(".control_left") as HTMLImageElement;
 const rightButton = document.querySelector(".control_right") as HTMLImageElement;
 const backButton = document.querySelector(".control_back") as HTMLImageElement;
 
-forwardButton.addEventListener("click", () => {
-    console.log("forward");
+forwardButton.addEventListener("click", async () => {
+    await fetch("/direction/forward");
 });
 
-leftButton.addEventListener("click", () => {
-    console.log("left");
+leftButton.addEventListener("click", async () => {
+    await fetch("/direction/left");
 });
 
-rightButton.addEventListener("click", () => {
-    console.log("right");
+rightButton.addEventListener("click", async () => {
+    await fetch("/direction/right");
 });
 
-backButton.addEventListener("click", () => {
-    console.log("back");
+backButton.addEventListener("click", async () => {
+    await fetch("/direction/back");
 });
