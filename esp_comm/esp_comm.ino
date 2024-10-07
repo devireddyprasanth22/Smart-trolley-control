@@ -1,27 +1,25 @@
 #include <ESP8266WiFi.h>
 #include <WiFiClient.h>
 #include <ESP8266WebServer.h>
-#include <LittleFS.h> // LittleFS library for file handling
+#include <LittleFS.h>  // LittleFS library for file handling
 
-#define SERIAL_BAUD 115200 // Match with your Serial Monitor
+#define SERIAL_BAUD 115200  // Match with your Serial Monitor
 
-ESP8266WebServer server(80); // Create a web server on port 80
-char writeBuffer[64];        // Buffer to store incoming serial data
-char readBuffer[64];         // Buffer to store outgoing serial data
+ESP8266WebServer server(80);  // Create a web server on port 80
+char writeBuffer[64];         // Buffer to store incoming serial data
+char readBuffer[64];          // Buffer to store outgoing serial data
 
 String serialData = "";
 
 // Static IP for your ESP
 const IPAddress serverIPAddress(10, 0, 0, 7);
 
-void setup(void)
-{
+void setup(void) {
   // Start Serial
   Serial.begin(SERIAL_BAUD);
 
   // Initialize LittleFS
-  if (!LittleFS.begin())
-  {
+  if (!LittleFS.begin()) {
     Serial.println("Failed to mount LittleFS!");
     return;
   }
@@ -31,74 +29,80 @@ void setup(void)
   WiFi.softAP("XC4411 Dual Board");
 
   // Serve the root index.html
-  server.on("/", []()
-            { handleFileRequest("/index.html"); });
+  server.on("/", []() {
+    handleFileRequest("/index.html");
+  });
 
   // Serve the CSS file located in data/assets/
-  server.on("/assets/index-BphnNmrb.css", []()
-            { handleFileRequest("./assets/index-BphnNmrb.css"); });
+  server.on("/assets/index-BphnNmrb.css", []() {
+    handleFileRequest("./assets/index-BphnNmrb.css");
+  });
 
   // Serve the js file located in data/assets/
-  server.on("/assets/index-os2gvVtR.js", []()
-            { handleFileRequest("./assets/index-os2gvVtR.js"); });
+  server.on("/assets/index-os2gvVtR.js", []() {
+    handleFileRequest("./assets/index-os2gvVtR.js");
+  });
 
   // Serve the svg located in /
-  server.on("/triangle.svg", []()
-            { handleFileRequest("./triangle.svg"); });
+  server.on("/triangle.svg", []() {
+    handleFileRequest("./triangle.svg");
+  });
 
   // Serve the svg located in /
-  server.on("/circle.svg", []()
-            { handleFileRequest("./circle.svg"); });
+  server.on("/circle.svg", []() {
+    handleFileRequest("./circle.svg");
+  });
 
   // Serve the svg located in /
-  server.on("/vite.svg", []()
-            { handleFileRequest("/vite.svg"); });
+  server.on("/vite.svg", []() {
+    handleFileRequest("/vite.svg");
+  });
 
   // Endpoint for serial data reading
-  server.on("/reading", []()
-            {
+  server.on("/reading", []() {
     Serial.println(serialData);
-    server.send(200, "text/plain", serialData); });
+    server.send(200, "text/plain", serialData);
+  });
 
   // Endpoint for forward
-  server.on("/direction/forward", []()
-            {
+  server.on("/direction/forward", []() {
     sprintf(serialBuffer, "[DIRECTION] forward");
     Serial.write("[DIRECTION] forward");
     delay(1000);
-    
-    String message = "";  // to store any string messages like "State changed"
-    message = Serial.readStringUntil('\n');
-    
+
+    sprintf(readBuffer, Serial.readStringUntil('\n'));
+    String result = readbuffer;
+
     if (message) {
-      server.send(200, "text/plain", );
+      server.send(200, "text/plain", readBuffer);
     } else {
       server.send(500, "text/plain", "message not received");
-    } });
+    }
+  });
 
   // Endpoint for backwards
-  server.on("/direction/backwards", []()
-            {
+  server.on("/direction/backwards", []() {
     Serial.write("[DIRECTION] backward");
-    server.send(200, "text/plain", "backward"); });
+    server.send(200, "text/plain", "backward");
+  });
 
   // Endpoint for left
-  server.on("/direction/left", []()
-            {
+  server.on("/direction/left", []() {
     Serial.write("[DIRECTION] left");
-    server.send(200, "text/plain", "left"); });
+    server.send(200, "text/plain", "left");
+  });
 
   // Endpoint for right
-  server.on("/direction/right", []()
-            {
-     Serial.write("[DIRECTION] right");
-    server.send(200, "text/plain", "right"); });
+  server.on("/direction/right", []() {
+    Serial.write("[DIRECTION] right");
+    server.send(200, "text/plain", "right");
+  });
 
   // Endpoint for stop
-  server.on("/direction/stop", []()
-            {
-     Serial.write("[DIRECTION] stop");
-    server.send(200, "text/plain", "stop"); });
+  server.on("/direction/stop", []() {
+    Serial.write("[DIRECTION] stop");
+    server.send(200, "text/plain", "stop");
+  });
   // Handle undefined requests
   server.onNotFound(handleNotFound);
 
@@ -106,11 +110,9 @@ void setup(void)
   server.begin();
 }
 
-void loop(void)
-{
+void loop(void) {
   // Read incoming serial data
-  while (Serial.available())
-  {
+  while (Serial.available()) {
     char x = Serial.read();
     if (x == '\r')
       continue;
@@ -122,30 +124,24 @@ void loop(void)
 }
 
 // Function to handle file requests from LittleFS
-void handleFileRequest(String path)
-{
-  if (path.endsWith("/"))
-  {
-    path += "index.html"; // Serve index.html if root path is requested
+void handleFileRequest(String path) {
+  if (path.endsWith("/")) {
+    path += "index.html";  // Serve index.html if root path is requested
   }
 
-  String contentType = getContentType(path); // Determine content type
+  String contentType = getContentType(path);  // Determine content type
 
-  if (LittleFS.exists(path))
-  {
+  if (LittleFS.exists(path)) {
     File file = LittleFS.open(path, "r");
     server.streamFile(file, contentType);
     file.close();
-  }
-  else
-  {
+  } else {
     server.send(404, "text/plain", "File Not Found");
   }
 }
 
 // Determine the content type (HTML, CSS, etc.)
-String getContentType(String filename)
-{
+String getContentType(String filename) {
   if (filename.endsWith(".html"))
     return "text/html";
   else if (filename.endsWith(".css"))
@@ -160,8 +156,7 @@ String getContentType(String filename)
 }
 
 // Handle 404 (file not found) errors
-void handleNotFound()
-{
+void handleNotFound() {
   String message = "File Not Found\n\n";
   message += "URI: ";
   message += server.uri();
@@ -170,8 +165,7 @@ void handleNotFound()
   message += "\nArguments: ";
   message += server.args();
   message += "\n";
-  for (uint8_t i = 0; i < server.args(); i++)
-  {
+  for (uint8_t i = 0; i < server.args(); i++) {
     message += " " + server.argName(i) + ": " + server.arg(i) + "\n";
   }
   server.send(404, "text/plain", message);
