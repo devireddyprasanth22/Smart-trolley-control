@@ -4,14 +4,15 @@ int IN3 = 7;
 int IN4 = 8;
 int ENA = 9;
 int ENB = 10;
-
-char readBuffer[64];
-char writeBuffer[64];
+#define SERIAL_BAUD 9600
+// char readBuffer[64];
+// char writeBuffer[64];
 
 void setup() {
   for (int i = 5; i < 11; i++) {
     pinMode(i, OUTPUT);
   }
+  Serial.begin(SERIAL_BAUD);
 }
 
 // Wheel controls =============================
@@ -101,7 +102,7 @@ void runTrolley(String direction) {
   } else if (direction == "stop") {
     stop();
   } else {
-    Serial.println("WHYYYYYYY ARE YOU HERREEEE: GO AWAYYYY")
+    Serial.println("WHYYYYYYY ARE YOU HERREEEE: GO AWAYYYY");
   }
 }
 
@@ -109,10 +110,15 @@ void loop() {
   String lastMessage;
 
   if (Serial.available() > 0) {
-    sprintf(readBuffer, Serial.readStringUntil('\n'));
-    String message = readBuffer;
-    sprintf(writeBuffer, "Received: %s", message);
-    Serial.println(writeBuffer);
+    // int availableBytes = Serial.available();
+    // for (int i=0; i<availableBytes; i++ ){
+    //   readBuffer[i] = Serial.read();
+    // }
+    // sprintf(readBuffer, Serial.readUntil('\n'));
+    String message = Serial.readStringUntil('\n');
+    // sprintf(writeBuffer, "Received: %s\n", message);
+    Serial.println(message);
+
 
 
     // String message = "";  // to store any string messages like "State changed"

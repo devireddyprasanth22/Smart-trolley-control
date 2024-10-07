@@ -3,11 +3,11 @@
 #include <ESP8266WebServer.h>
 #include <LittleFS.h>  // LittleFS library for file handling
 
-#define SERIAL_BAUD 115200  // Match with your Serial Monitor
+#define SERIAL_BAUD 9600  // Match with your Serial Monitor
 
 ESP8266WebServer server(80);  // Create a web server on port 80
-char writeBuffer[64];         // Buffer to store incoming serial data
-char readBuffer[64];          // Buffer to store outgoing serial data
+//char writeBuffer[64];         // Buffer to store incoming serial data
+//char readBuffer[64];          // Buffer to store outgoing serial data
 
 String serialData = "";
 
@@ -34,13 +34,13 @@ void setup(void) {
   });
 
   // Serve the CSS file located in data/assets/
-  server.on("/assets/index-BphnNmrb.css", []() {
-    handleFileRequest("./assets/index-BphnNmrb.css");
+  server.on("/assets/index-BmM1S-8A.css", []() {
+    handleFileRequest("./assets/index-BmM1S-8A.css");
   });
 
   // Serve the js file located in data/assets/
-  server.on("/assets/index-os2gvVtR.js", []() {
-    handleFileRequest("./assets/index-os2gvVtR.js");
+  server.on("/assets/index-D0kTGjjH.js", []() {
+    handleFileRequest("./assets/index-D0kTGjjH.js");
   });
 
   // Serve the svg located in /
@@ -66,16 +66,16 @@ void setup(void) {
 
   // Endpoint for forward
   server.on("/direction/forward", []() {
-    sprintf(serialBuffer, "[DIRECTION] forward");
-    Serial.write("[DIRECTION] forward");
+//    sprintf(writeBuffer, "[DIRECTION] forward\n");
+    Serial.println("[DIRECTION] forward\n");
     delay(1000);
-    while (Serial.available ()==0){}
+    //    while (Serial.available ()==0){}
 
-    sprintf(readBuffer, Serial.readStringUntil('\n'));
-    String result = readbuffer;
-
+    //    sprintf(readBuffer, Serial.readStringUntil('\n'));
+    //    String result = Serial.readStringUntil('\n')readbuffer;
+    String message = Serial.readStringUntil('\n');
     if (message) {
-      server.send(200, "text/plain", readBuffer);
+      server.send(200, "text/plain", "message:" + message + "AM");
     } else {
       server.send(500, "text/plain", "message not received");
     }
