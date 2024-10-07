@@ -116,8 +116,9 @@ void loop() {
     // }
     // sprintf(readBuffer, Serial.readUntil('\n'));
     String message = Serial.readStringUntil('\n');
+    String value = getValue(message, ' ', 1);
     // sprintf(writeBuffer, "Received: %s\n", message);
-    Serial.println(message);
+    Serial.println(valueP);
 
 
 
