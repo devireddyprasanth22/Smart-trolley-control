@@ -5,6 +5,9 @@ int IN4 = 8;
 int ENA = 9;
 int ENB = 10;
 
+char readBuffer[64];
+char writeBuffer[64];
+
 void setup() {
   for (int i = 5; i < 11; i++) {
     pinMode(i, OUTPUT);
@@ -105,24 +108,31 @@ void runTrolley(String direction) {
 void loop() {
   String lastMessage;
 
-  if (Serial.available() > 0){
-    String message = "";  // to store any string messages like "State changed"
-      while (Serial.available() > 0) {
-        char c = Serial.read();
-        if (c == '\n') break;  // Stop reading the message at a newline
-        message += c;          // Accumulate message characters
-    }
+  if (Serial.available() > 0) {
+    sprintf(readBuffer, Serial.readStringUntil('\n'));
+    String message = readBuffer;
+    sprintf(writeBuffer, "Received: %s", message);
+    Serial.println(writeBuffer);
 
-    // 3. Read message
-    String command1 = getValue(message, " ", 0);
-    if (command1 == "[DIRECTION]") {
-      String direction = getValue(message, " ", 1);
-      lastMessage = direction;
-      runTrolley(direction);
-      continue;
-    }
+
+    // String message = "";  // to store any string messages like "State changed"
+    // while (Serial.available() > 0) {
+    //   char c = Serial.read();
+    //   if (c == '\n')
+    //     break;       // Stop reading the message at a newline
+    //   message += c;  // Accumulate message characters
+    // }
+
+    // // 3. Read message
+    // String command1 = getValue(message, ' ', 0);
+    // if (command1 == "[DIRECTION]") {
+    //   String direction = getValue(message, ' ', 1);
+    //   lastMessage = direction;
+    //   runTrolley(direction);
+    //   continue;
+    // }
   }
-  runTrolley(lastMessage);
+  // runTrolley(lastMessage);
 }
 
 // // rotate CW

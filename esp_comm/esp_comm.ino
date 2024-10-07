@@ -69,6 +69,7 @@ void setup(void) {
     sprintf(serialBuffer, "[DIRECTION] forward");
     Serial.write("[DIRECTION] forward");
     delay(1000);
+    while (Serial.available ()==0){}
 
     sprintf(readBuffer, Serial.readStringUntil('\n'));
     String result = readbuffer;
