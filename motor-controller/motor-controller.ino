@@ -5,6 +5,7 @@ int IN4 = 8;
 int ENA = 9;
 int ENB = 10;
 #define SERIAL_BAUD 9600
+String lastMessage;
 // char readBuffer[64];
 // char writeBuffer[64];
 
@@ -93,21 +94,25 @@ String getValue(String data, char separator, int index) {
 void runTrolley(String direction) {
   if (direction == "forward") {
     goForward();
-  } else if (direction == "back") {
+    Serial.println("going forward");
+  } else if (direction == "backward") {
     goBack();
+    Serial.println("going backwards");
   } else if (direction == "left") {
     goLeft();
+    Serial.println("going left");
   } else if (direction == "right") {
     goRight();
+    Serial.println("going right");
   } else if (direction == "stop") {
     stop();
+    Serial.println("stopping");
   } else {
     Serial.println("WHYYYYYYY ARE YOU HERREEEE: GO AWAYYYY");
   }
 }
 
 void loop() {
-  String lastMessage;
 
   if (Serial.available() > 0) {
     // int availableBytes = Serial.available();
@@ -116,9 +121,10 @@ void loop() {
     // }
     // sprintf(readBuffer, Serial.readUntil('\n'));
     String message = Serial.readStringUntil('\n');
-    String value = getValue(message, ' ', 1);
-    // sprintf(writeBuffer, "Received: %s\n", message);
-    Serial.println(valueP);
+    // String value = getValue(message, ' ', 1);
+    // // sprintf(writeBuffer, "Received: %s\n", message);
+    // runTrolley(value);
+    // Serial.println(value);
 
 
 
@@ -130,16 +136,16 @@ void loop() {
     //   message += c;  // Accumulate message characters
     // }
 
-    // // 3. Read message
-    // String command1 = getValue(message, ' ', 0);
-    // if (command1 == "[DIRECTION]") {
-    //   String direction = getValue(message, ' ', 1);
-    //   lastMessage = direction;
-    //   runTrolley(direction);
-    //   continue;
-    // }
+    // 3. Read message
+    String command1 = getValue(message, ' ', 0);
+    if (command1 == "[DIRECTION]") {
+      String direction = getValue(message, ' ', 1);
+      lastMessage = direction;
+      runTrolley(direction);
+    }
+  } else {
+    runTrolley(lastMessage);
   }
-  // runTrolley(lastMessage);
 }
 
 // // rotate CW

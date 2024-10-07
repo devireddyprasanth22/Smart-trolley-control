@@ -66,43 +66,62 @@ void setup(void) {
 
   // Endpoint for forward
   server.on("/direction/forward", []() {
-//    sprintf(writeBuffer, "[DIRECTION] forward\n");
     Serial.println("[DIRECTION] forward\n");
-    delay(1000);
-    //    while (Serial.available ()==0){}
-
-    //    sprintf(readBuffer, Serial.readStringUntil('\n'));
-    //    String result = Serial.readStringUntil('\n')readbuffer;
+     while (Serial.available ()==0){}
     String message = Serial.readStringUntil('\n');
     if (message) {
-      server.send(200, "text/plain", "message:" + message + "AM");
+      server.send(200, "text/plain", "message:" + message);
     } else {
       server.send(500, "text/plain", "message not received");
     }
   });
 
   // Endpoint for backwards
-  server.on("/direction/backwards", []() {
-    Serial.write("[DIRECTION] backward");
-    server.send(200, "text/plain", "backward");
+  server.on("/direction/backward", []() {
+    Serial.println("[DIRECTION] backward\n");
+     while (Serial.available ()==0){}
+    String message = Serial.readStringUntil('\n');
+    if (message) {
+      server.send(200, "text/plain", "message:" + message);
+    } else {
+      server.send(500, "text/plain", "message not received");
+    }
   });
 
   // Endpoint for left
   server.on("/direction/left", []() {
-    Serial.write("[DIRECTION] left");
-    server.send(200, "text/plain", "left");
+     Serial.println("[DIRECTION] left\n");
+     while (Serial.available ()==0){}
+    String message = Serial.readStringUntil('\n');
+    if (message) {
+      server.send(200, "text/plain", "message:" + message);
+    } else {
+      server.send(500, "text/plain", "message not received");
+    }
   });
 
   // Endpoint for right
   server.on("/direction/right", []() {
-    Serial.write("[DIRECTION] right");
-    server.send(200, "text/plain", "right");
+    Serial.println("[DIRECTION] right\n");
+     while (Serial.available ()==0){}
+    String message = Serial.readStringUntil('\n');
+    if (message) {
+      server.send(200, "text/plain", "message:" + message);
+    } else {
+      server.send(500, "text/plain", "message not received");
+    }
   });
 
   // Endpoint for stop
   server.on("/direction/stop", []() {
-    Serial.write("[DIRECTION] stop");
-    server.send(200, "text/plain", "stop");
+   Serial.println("[DIRECTION] stop\n");
+     while (Serial.available ()==0){}
+    String message = Serial.readStringUntil('\n');
+    if (message) {
+      server.send(200, "text/plain", "message:" + message + "AM");
+    } else {
+      server.send(500, "text/plain", "message not received");
+    }
   });
   // Handle undefined requests
   server.onNotFound(handleNotFound);
