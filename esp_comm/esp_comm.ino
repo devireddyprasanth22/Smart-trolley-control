@@ -78,19 +78,27 @@ void setup(void)
 
   // Endpoint for backwards
   server.on("/direction/backwards", []()
-            { Serial.write("[DIRECTION] backward")
-                  server.send(200, "text/plain", "backward"); });
+            {
+    Serial.write("[DIRECTION] backward");
+    server.send(200, "text/plain", "backward"); });
 
   // Endpoint for left
   server.on("/direction/left", []()
-            { Serial.write("[DIRECTION] left")
-                  server.send(200, "text/plain", "left"); });
+            {
+    Serial.write("[DIRECTION] left");
+    server.send(200, "text/plain", "left"); });
 
-  // Endpoint for righr
+  // Endpoint for right
   server.on("/direction/right", []()
-            { Serial.write("[DIRECTION] right")
-                  server.send(200, "text/plain", "right"); });
+            {
+     Serial.write("[DIRECTION] right");
+    server.send(200, "text/plain", "right"); });
 
+  // Endpoint for stop
+  server.on("/direction/stop", []()
+            {
+     Serial.write("[DIRECTION] stop");
+    server.send(200, "text/plain", "stop"); });
   // Handle undefined requests
   server.onNotFound(handleNotFound);
 
