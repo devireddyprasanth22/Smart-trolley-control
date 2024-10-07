@@ -118,7 +118,7 @@ void setup(void) {
      while (Serial.available ()==0){}
     String message = Serial.readStringUntil('\n');
     if (message) {
-      server.send(200, "text/plain", "message:" + message + "AM");
+      server.send(200, "text/plain", "message:" + message);
     } else {
       server.send(500, "text/plain", "message not received");
     }

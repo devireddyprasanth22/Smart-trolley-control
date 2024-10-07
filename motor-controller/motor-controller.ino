@@ -14,6 +14,7 @@ void setup() {
     pinMode(i, OUTPUT);
   }
   Serial.begin(SERIAL_BAUD);
+  lastMessage = "nowhere";
 }
 
 // Wheel controls =============================
@@ -113,29 +114,8 @@ void runTrolley(String direction) {
 }
 
 void loop() {
-
   if (Serial.available() > 0) {
-    // int availableBytes = Serial.available();
-    // for (int i=0; i<availableBytes; i++ ){
-    //   readBuffer[i] = Serial.read();
-    // }
-    // sprintf(readBuffer, Serial.readUntil('\n'));
     String message = Serial.readStringUntil('\n');
-    // String value = getValue(message, ' ', 1);
-    // // sprintf(writeBuffer, "Received: %s\n", message);
-    // runTrolley(value);
-    // Serial.println(value);
-
-
-
-    // String message = "";  // to store any string messages like "State changed"
-    // while (Serial.available() > 0) {
-    //   char c = Serial.read();
-    //   if (c == '\n')
-    //     break;       // Stop reading the message at a newline
-    //   message += c;  // Accumulate message characters
-    // }
-
     // 3. Read message
     String command1 = getValue(message, ' ', 0);
     if (command1 == "[DIRECTION]") {
@@ -146,30 +126,5 @@ void loop() {
   } else {
     runTrolley(lastMessage);
   }
+  delay(500);
 }
-
-// // rotate CW
-// digitalWrite(IN1, LOW);
-// digitalWrite(IN2, HIGH);
-// analogWrite(ENA, 200);
-// digitalWrite(IN3, LOW);
-// digitalWrite(IN4, HIGH);
-// analogWrite(ENB, 200);
-// delay(1000);
-// // pause for 1S
-// analogWrite(ENA, 0);
-// analogWrite(ENB, 0);
-// delay(1000);
-// // rotate CCW
-// digitalWrite(IN1, HIGH);
-// digitalWrite(IN2, LOW);
-// analogWrite(ENA, 100);
-// digitalWrite(IN3, HIGH);
-// digitalWrite(IN4, LOW);
-// analogWrite(ENB, 100);
-// delay(1000);
-// // pause for 1S
-// analogWrite(ENA, 0);
-// analogWrite(ENB, 0);
-// delay(1000);
-// }
