@@ -21,6 +21,6 @@ rightButton.addEventListener("click", async () => {
 });
 
 backButton.addEventListener("click", async () => {
-    await fetch("/direction/back");
+    await fetch("/direction/backward");
     console.log("back");
 });

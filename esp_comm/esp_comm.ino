@@ -39,8 +39,8 @@ void setup(void) {
   });
 
   // Serve the js file located in data/assets/
-  server.on("/assets/index-D0kTGjjH.js", []() {
-    handleFileRequest("./assets/index-D0kTGjjH.js");
+  server.on("/assets/index-aw07Gri7.js", []() {
+    handleFileRequest("./assets/index-aw07Gri7.js");
   });
 
   // Serve the svg located in /
