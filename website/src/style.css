@@ -116,4 +116,14 @@ img.controller_button:hover {
 
 .faq {
     width: fit-content;
+    line-height: 1.7;
+
+    & ul {
+        margin-top: 2rem;
+        text-align: left;
+
+        & li {
+            list-style: circle;
+        }
+    }
 }
