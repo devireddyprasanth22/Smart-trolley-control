@@ -34,13 +34,13 @@ void setup(void) {
   });
 
   // Serve the CSS file located in data/assets/
-  server.on("/assets/index-BmM1S-8A.css", []() {
-    handleFileRequest("./assets/index-BmM1S-8A.css");
+  server.on("/assets/index-CweVZ8kg.css", []() {
+    handleFileRequest("./assets/index-CweVZ8kg.css");
   });
 
   // Serve the js file located in data/assets/
-  server.on("/assets/index-aw07Gri7.js", []() {
-    handleFileRequest("./assets/index-aw07Gri7.js");
+  server.on("/assets/index-Bq7qqcsl.js", []() {
+    handleFileRequest("./assets/index-Bq7qqcsl.js");
   });
 
   // Serve the svg located in /

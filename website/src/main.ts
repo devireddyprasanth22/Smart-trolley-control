@@ -58,12 +58,7 @@ rightButton.addEventListener("click", async () => {
 });
 
 backButton.addEventListener("click", async () => {
-<<<<<<< HEAD
-    await fetch("/direction/backward");
-    console.log("back");
-=======
     highlightButton(Direction.Backward);
     const response = await fetch("/direction/backward");
     console.log(response);
->>>>>>> 504be6e9c1898fd6df74b0dedcdd0f6d823b8e0b
 });
