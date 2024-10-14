@@ -26,7 +26,7 @@ void setup(void) {
 
   // Start WiFi in AP mode with a static IP
   WiFi.softAPConfig(serverIPAddress, serverIPAddress, IPAddress(255, 255, 255, 0));
-  WiFi.softAP("XC4411 Dual Board");
+  WiFi.softAP("Grocerinator-3000");
 
   // Serve the root index.html
   server.on("/", []() {
@@ -39,8 +39,8 @@ void setup(void) {
   });
 
   // Serve the js file located in data/assets/
-  server.on("/assets/index-Bq7qqcsl.js", []() {
-    handleFileRequest("./assets/index-Bq7qqcsl.js");
+  server.on("/assets/index-CAQ7gazG.js", []() {
+    handleFileRequest("./assets/index-CAQ7gazG.js");
   });
 
   // Serve the svg located in /
