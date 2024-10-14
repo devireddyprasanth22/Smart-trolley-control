@@ -36,6 +36,9 @@ function highlightButton(direction: Direction) {
         case Direction.Backward:
             backButton.classList.add("controller_active");
             break;
+        case Direction.Stop:
+            backButton.classList.add("controller_active");
+            break;
     }
 }
 
@@ -60,5 +63,11 @@ rightButton.addEventListener("click", async () => {
 backButton.addEventListener("click", async () => {
     highlightButton(Direction.Backward);
     const response = await fetch("/direction/backward");
+    console.log(response);
+});
+
+backButton.addEventListener("click", async () => {
+    highlightButton(Direction.Stop);
+    const response = await fetch("/direction/stop");
     console.log(response);
 });
